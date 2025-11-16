@@ -1,0 +1,31 @@
+name: Review pipeline
+
+on:
+  push:
+    branches: [ $default-branch ]
+  pull_request:
+    branches: [ $default-branch ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install
+        run: npm ci
+
+      - name: Test
+        run: npm test
+
+  docker:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Build Docker
+        run: docker build -t gd-cicd .
+      
+      - name: Push Image
+        run: echo "push image to GCP"
