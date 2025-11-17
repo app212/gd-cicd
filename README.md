@@ -2,7 +2,7 @@
 
 ### GCP Setup
 #### Service account
-```
+```bash
 gcloud iam service-accounts create gd-cicd \
   --display-name "GitHub Actions Pipeline"
 
@@ -22,7 +22,7 @@ gcloud projects add-iam-policy-binding $PROJECT_ID \
 
 #### Workload Identity Pool & Provider
 
-```
+```bash
 gcloud iam workload-identity-pools create "github-pool" \
   --location="global" \
   --display-name="GitHub Actions Pool" \
