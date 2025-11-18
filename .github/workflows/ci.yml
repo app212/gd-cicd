@@ -46,10 +46,11 @@ jobs:
       - name: Configure Docker
         run: gcloud auth configure-docker $GAR_HOSTNAME --quiet
 
+      - name: Set Image Name
+        run: echo "IMG_FULL_NAME=$GAR_HOSTNAME/$IMG_NAME:${{ github.sha }}" >> $GITHUB_ENV
+      
       - name: Build Docker
-        run: |
-          export IMG_FULL_NAME="$GAR_HOSTNAME/$IMG_NAME:${{ github.sha }}"
-          docker build -t $IMG_FULL_NAME .
+        run: docker build -t $IMG_FULL_NAME .
 
       - name: Scan Image
         run: echo "scan image"
