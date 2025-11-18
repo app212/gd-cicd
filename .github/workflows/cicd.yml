@@ -92,7 +92,7 @@ jobs:
           image: ${{ env.IMG_FULL_NAME }}
           region: ${{ env.REGION }}
           project_id: ${{ secrets.GCP_PROJECT_ID }}
-          flags: "--allow-unauthenticated"
+          flags: "--allow-unauthenticated --min-instances=1"
 
       - name: 'Ping endpoint'
         run: 'curl "${{ steps.deploy.outputs.url }}/greet/CI-CD"'
