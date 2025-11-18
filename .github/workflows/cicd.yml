@@ -10,6 +10,7 @@ env:
   IMG_NAME: demo-api
   REGION: europe-north1
   SERVICE: gd-cicd
+  INST_NUM: 1
 
 jobs:
   build:
@@ -92,7 +93,7 @@ jobs:
           image: ${{ env.IMG_FULL_NAME }}
           region: ${{ env.REGION }}
           project_id: ${{ secrets.GCP_PROJECT_ID }}
-          flags: "--allow-unauthenticated --min-instances=1"
+          flags: "--allow-unauthenticated --max-instances=${{env.INST_NUM}} --max=${{env.INST_NUM}}"
 
       - name: 'Ping endpoint'
         run: 'curl "${{ steps.deploy.outputs.url }}/greet/CI-CD"'
