@@ -51,7 +51,9 @@ jobs:
 
       - name: Set Image Name
         id: set-img
-        run: echo "IMG_FULL_NAME=$GAR_HOSTNAME/$PROJECT_REPO/$IMG_NAME:${{ github.sha }}" | tee $GITHUB_ENV $GITHUB_OUTPUT
+        run: | 
+          echo "IMG_FULL_NAME=$GAR_HOSTNAME/$PROJECT_REPO/$IMG_NAME:${{ github.sha }}" >> $GITHUB_ENV 
+          echo "IMG_FULL_NAME=$GAR_HOSTNAME/$PROJECT_REPO/$IMG_NAME:${{ github.sha }}" >> $GITHUB_OUTPUT
       
       - name: Build Docker
         run: docker build -t $IMG_FULL_NAME .
