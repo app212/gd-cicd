@@ -29,7 +29,8 @@ jobs:
       id-token: 'write'
 
     env:
-      GAR_HOSTNAME: europe-north1-docker.pkg.dev/gridtests/gd-cicd
+      GAR_HOSTNAME: europe-north1-docker.pkg.dev
+      PROJECT_REPO: gridtests/gd-cicd
       IMG_NAME: demo-api
 
     steps:
@@ -47,7 +48,7 @@ jobs:
         run: gcloud auth configure-docker $GAR_HOSTNAME --quiet
 
       - name: Set Image Name
-        run: echo "IMG_FULL_NAME=$GAR_HOSTNAME/$IMG_NAME:${{ github.sha }}" >> $GITHUB_ENV
+        run: echo "IMG_FULL_NAME=$GAR_HOSTNAME/$PROJECT_REPO/$IMG_NAME:${{ github.sha }}" >> $GITHUB_ENV
       
       - name: Build Docker
         run: docker build -t $IMG_FULL_NAME .
