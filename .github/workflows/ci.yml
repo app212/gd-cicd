@@ -1,10 +1,8 @@
-name: Review pipeline
+name: Test and Deploy pipeline
 
 on:
   push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   build:
@@ -61,3 +59,13 @@ jobs:
       
       - name: Push Image
         run: docker push $IMG_FULL_NAME
+    
+      - name: Deploy to Cloud Run    
+        id: 'deploy'
+        uses: 'google-github-actions/deploy-cloudrun@v3'
+        with:
+          service: 'gd-cicd'
+          image: ${{ env.IMG_FULL_NAME }}
+
+      - name: 'Check output'
+        run: 'curl "${{ steps.deploy.outputs.url }}/greet/CI-CD"'
