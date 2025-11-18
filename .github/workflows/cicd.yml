@@ -28,8 +28,6 @@ jobs:
   docker:
     runs-on: ubuntu-latest
     needs: build
-    outputs: 
-      img_full_name: ${{ steps.set-img.outputs.img_full_name }}
     
     permissions:
       contents: 'read'
@@ -50,10 +48,7 @@ jobs:
         run: gcloud auth configure-docker $GAR_HOSTNAME --quiet
 
       - name: Set Image Name
-        id: set-img
-        run: | 
-          echo "IMG_FULL_NAME=$GAR_HOSTNAME/$PROJECT_REPO/$IMG_NAME:${{ github.sha }}" >> $GITHUB_ENV 
-          echo "img_full_name=$GAR_HOSTNAME/$PROJECT_REPO/$IMG_NAME:${{ github.sha }}" >> $GITHUB_OUTPUT
+        run: echo "IMG_FULL_NAME=$GAR_HOSTNAME/$PROJECT_REPO/$IMG_NAME:${{ github.sha }}" >> $GITHUB_ENV 
       
       - name: Build Docker
         run: docker build -t $IMG_FULL_NAME .
@@ -78,7 +73,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        
+
+      - name: Set Image Name
+        run: echo "IMG_FULL_NAME=$GAR_HOSTNAME/$PROJECT_REPO/$IMG_NAME:${{ github.sha }}" >> $GITHUB_ENV
+
       - name: GCP Auth
         uses: 'google-github-actions/auth@v3'
         with:
@@ -91,7 +89,7 @@ jobs:
         uses: 'google-github-actions/deploy-cloudrun@v3'
         with:
           service: ${{ env.SERVICE }}
-          image: ${{ needs.docker.outputs.img_full_name }}
+          image: ${{ env.IMG_FULL_NAME }}
           region: ${{ env.REGION }}
           project_id: ${{ secrets.GCP_PROJECT_ID }}
           flags: "--allow-unauthenticated"
