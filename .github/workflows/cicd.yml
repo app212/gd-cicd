@@ -30,6 +30,7 @@ jobs:
       GAR_HOSTNAME: europe-north1-docker.pkg.dev
       PROJECT_REPO: gridtests/gd-cicd
       IMG_NAME: demo-api
+      REGION: europe-north1
 
     steps:
       - name: Checkout
@@ -66,6 +67,8 @@ jobs:
         with:
           service: 'gd-cicd'
           image: ${{ env.IMG_FULL_NAME }}
+          region: ${{ env.REGION }}
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
 
       - name: 'Check output'
         run: 'curl "${{ steps.deploy.outputs.url }}/greet/CI-CD"'
