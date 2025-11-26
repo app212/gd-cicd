@@ -1,2 +1,4 @@
 node_modules/
 gha-creds-*.json
+infrastructure/.terraform*
+infrastructure/*.tfstate*

@@ -1,5 +1,9 @@
 # Github Actions demo for a simple Node.js app
 
+### Terraform
+```bash
+terraform apply -var="repo_owner_id=1234" -var="repo_id=1234"           
+```
 
 ### GCP Setup
 #### Service account
