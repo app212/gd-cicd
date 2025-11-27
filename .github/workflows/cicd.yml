@@ -2,7 +2,8 @@ name: Test and Deploy pipeline
 
 on:
   push:
-    branches: [main]
+    branches:
+      - '*'
 
 env:
   GAR_HOSTNAME: europe-north1-docker.pkg.dev
@@ -29,7 +30,7 @@ jobs:
 
   docker:
     runs-on: ubuntu-latest
-    if: ${{ !contains(github.event.head_commit.message, '--skip-pipeline') }}
+    if: ${{ !contains(github.event.head_commit.message, '--skip-pipeline') }} && ${{ github.ref_name == 'main' }}
     needs: build
     
     permissions:
@@ -67,7 +68,7 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
-    if: ${{ !contains(github.event.head_commit.message, '--skip-pipeline') }}
+    if: ${{ !contains(github.event.head_commit.message, '--skip-pipeline') }} && ${{ github.ref_name == 'main' }}
     needs: docker
     
     permissions:
