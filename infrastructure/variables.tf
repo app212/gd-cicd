@@ -7,43 +7,43 @@ variable "project_id" {
 variable "region" {
   description = "Region for Artifact Registry"
   type        = string
-  default     = "europe-north2"
+  default     = "europe-north1"
 }
 
 variable "artifact_repo_name" {
   description = "Name of Artifact Registry repo"
   type        = string
-  default     = "gd-cicd2"
+  default     = "gd-cicd"
 }
 
 variable "cicd_sa_id" {
   description = "Service account id"
   type        = string
-  default     = "github-cicd2"
+  default     = "github-cicd"
 }
 
 variable "cicd_sa_name" {
   description = "Service account name"
   type        = string
-  default     = "GitHub Actions Pipeline2"
+  default     = "GitHub Actions Pipeline"
 }
 
 variable "wif_pool_id" {
   description = "Workload Identity Pool ID"
   type        = string
-  default     = "github-pool2"
+  default     = "github-pool"
 }
 
 variable "wif_pool_name" {
   description = "Workload Identity Pool Display Name"
   type        = string
-  default     = "GitHub Actions Pool2"
+  default     = "GitHub Actions Pool"
 }
 
 variable "wif_provider_id" {
   description = "Workload Identity Provider ID"
   type        = string
-  default     = "github-provider2"
+  default     = "github-provider"
 }
 
 variable "wif_provider_name" {
